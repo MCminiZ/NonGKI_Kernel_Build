@@ -456,14 +456,6 @@ jobs:
           key: build-kernel-${{ env.DEVICE_NAME }}${{ env.UPLOADNAME }}
           max-size: 2G
 
-      - name: 检查 cred.h 是否包含 get_cred_rcu（1）
-        run: |
-          cd $GITHUB_WORKSPACE/device_kernel/
-          echo "==== cred.h get_cred_rcu 定义 ===="
-          head -30 arch/arm64/kernel/vdso/gettimeofday-*.s
-          echo "==== cred.h 相关内容 ===="
-          grep -n '"' arch/arm64/kernel/vdso/gettimeofday-*.s
-
       - name: Build Kernel
         run: |
           export PATH=$GITHUB_WORKSPACE/clang-custom/bin:$PATH
@@ -476,13 +468,12 @@ jobs:
             make -j$(nproc --all) CC="ccache clang" O=out ARCH=arm64 ${{ env.CUSTOM_CMDS }} ${{ env.EXTRA_CMDS }} ${{ env.GCC_64 }} ${{ env.GCC_32 }}
           fi
 
-      - name: 检查 cred.h 是否包含 get_cred_rcu（2）
+      - name: 输出 vgettimeofday.s 的前 30 行
+        if: always()
         run: |
-          cd $GITHUB_WORKSPACE/device_kernel/
-          echo "==== cred.h get_cred_rcu 定义 ===="
-          head -30 arch/arm64/kernel/vdso/gettimeofday-*.s
-          echo "==== cred.h 相关内容 ===="
-          grep -n '"' arch/arm64/kernel/vdso/gettimeofday-*.s
+          ls -l /tmp/vgettimeofday-*.s || echo "文件不存在"
+          head -30 /tmp/vgettimeofday-*.s || echo "文件不存在"
+          grep -n '"' /tmp/vgettimeofday-*.s || echo "无双引号"
 
       - name: Make Anykernel3 Flasher
         if: env.PACK_METHOD == 'Anykernel3'
