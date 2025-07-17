@@ -472,6 +472,9 @@ jobs:
         if: always()
         run: |
           cd $GITHUB_WORKSPACE/device_kernel/
+          find /tmp -type f -name "*gettimeofday*"
+          find $GITHUB_WORKSPACE -type f -name "*gettimeofday*"
+          find $GITHUB_WORKSPACE/device_kernel/out -type f -name "*gettimeofday*"
           ls -l /tmp/vgettimeofday-*.s || echo "文件不存在"
           head -30 /tmp/vgettimeofday-*.s || echo "文件不存在"
           grep -n '"' /tmp/vgettimeofday-*.s || echo "无双引号"
