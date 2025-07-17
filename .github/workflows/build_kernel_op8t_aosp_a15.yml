@@ -460,9 +460,9 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/device_kernel/
           echo "==== cred.h get_cred_rcu 定义 ===="
-          grep -n get_cred_rcu include/linux/cred.h || echo "未找到 get_cred_rcu"
+          head -30 arch/arm64/kernel/vdso/gettimeofday-*.s
           echo "==== cred.h 相关内容 ===="
-          cat -n include/linux/cred.h | grep -A 5 -B 5 get_cred_rcu || echo "未找到相关内容"
+          grep -n '"' arch/arm64/kernel/vdso/gettimeofday-*.s
 
       - name: Build Kernel
         run: |
@@ -480,9 +480,9 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/device_kernel/
           echo "==== cred.h get_cred_rcu 定义 ===="
-          grep -n get_cred_rcu include/linux/cred.h || echo "未找到 get_cred_rcu"
+          head -30 arch/arm64/kernel/vdso/gettimeofday-*.s
           echo "==== cred.h 相关内容 ===="
-          cat -n include/linux/cred.h | grep -A 5 -B 5 get_cred_rcu || echo "未找到相关内容"
+          grep -n '"' arch/arm64/kernel/vdso/gettimeofday-*.s
 
       - name: Make Anykernel3 Flasher
         if: env.PACK_METHOD == 'Anykernel3'
