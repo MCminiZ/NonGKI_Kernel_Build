@@ -471,6 +471,7 @@ jobs:
       - name: 输出 vgettimeofday.s 的前 30 行
         if: always()
         run: |
+          cd $GITHUB_WORKSPACE/device_kernel/
           ls -l /tmp/vgettimeofday-*.s || echo "文件不存在"
           head -30 /tmp/vgettimeofday-*.s || echo "文件不存在"
           grep -n '"' /tmp/vgettimeofday-*.s || echo "无双引号"
