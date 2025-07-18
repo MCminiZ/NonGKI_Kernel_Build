@@ -555,6 +555,7 @@ jobs:
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Kernel.gz-dtb
+          name: Kernel-${{ env.PACK_NAME }}
           path: |
-            $GITHUB_WORKSPACE/device_kernel/out/arch/arm64/boot/Image.gz-dtb
+            ${{ env.PACK_NAME }}
+            ${{ github.workspace }}/device_kernel/out/arch/arm64/boot/dts/*.dtb
