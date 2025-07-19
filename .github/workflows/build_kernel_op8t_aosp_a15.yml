@@ -557,5 +557,5 @@ jobs:
         with:
           name: Kernel-${{ env.PACK_NAME }}
           path: |
-            ${{ env.PACK_NAME }}
+            ${{ github.workspace }}/device_kernel/${{ env.PACK_NAME }}
             ${{ github.workspace }}/device_kernel/out/arch/arm64/boot/dts/*.gz-dtb
